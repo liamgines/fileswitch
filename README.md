@@ -1,7 +1,7 @@
 fileswitch.vim
 ========
 
-A Vim plugin for switching quickly between files.
+A Vim plugin for quickly switching between files.
 
 Default Binds
 --------
