@@ -2,32 +2,31 @@ function! s:BufferIsFile(buffernumber)
     return getbufvar(a:buffernumber, '&buftype') == ''
 endfunction
 
-function! s:LsToFileLines()
+function! s:LsToFileNumbers()
     const ls = execute("ls")
     const lines = split(ls, "\n")
+    const linecount = len(lines)
 
-    let filelines = []
-    for i in range(0, len(lines) - 1)
+    let filenumbers = []
+    for i in range(0, linecount - 1)
         let line = split(lines[i])
-        let buffer = line[0]
-        let buffernumber = str2nr(buffer)
+        let buffernumber = str2nr(line[0])
         if s:BufferIsFile(buffernumber)
-            call add(filelines, lines[i])
+            call add(filenumbers, buffernumber)
         endif
     endfor
-    return filelines
+    return filenumbers
 endfunction
 
 function! fileswitch#BindKeysToFiles()
     const KEYS = 10
-    const lines = s:LsToFileLines()
-    const bindcount = min([len(lines), KEYS])
+    const filenumbers = s:LsToFileNumbers()
+    const bindcount = min([len(filenumbers), KEYS])
 
     for i in range(0, bindcount - 1)
         let keynumber = (i + 1) % KEYS
         let key = printf(g:fileswitch_keyformat, keynumber)
-        let line = split(lines[i])
-        let buffer = line[0]
-        execute "nnoremap ". key ." :b ". buffer ."<CR>"
+        let filenumber = filenumbers[i]
+        execute "nnoremap ". key ." :b ". filenumber ."<CR>"
     endfor
 endfunction
