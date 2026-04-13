@@ -9,5 +9,5 @@ endif
 
 augroup bufferupdates
     autocmd!
-    autocmd BufAdd,BufDelete * call timer_start(0, { -> fileswitch#MapBuffers() })
+    autocmd BufAdd,BufDelete * call timer_start(0, { -> fileswitch#BindKeysToFiles() })
 augroup END
