@@ -18,14 +18,32 @@ function! s:LsToFileLines()
     return filelines
 endfunction
 
+function! s:FindCharIndex(string, char, startindex)
+    let length = len(a:string)
+    for i in range(a:startindex, length - 1)
+        if a:string[i] == a:char
+            return i
+        endif
+    endfor
+    return -1
+endfunction
+
 " https://vi.stackexchange.com/a/37661
 function! fileswitch#EchoFileLines()
     let filelines = s:LsToFileLines()
     let linecount = len(filelines)
     for i in range(0, linecount - 1)
-        let line = split(filelines[i])
-        let line[0] = string(i + 1)
-        let filelines[i] = join(line, ' ')
+        let line = filelines[i]
+        let startquoteindex = s:FindCharIndex(line, '"', 0)
+        if (startquoteindex < 0)
+            continue
+        endif
+        let endquoteindex = s:FindCharIndex(line, '"', startquoteindex + 1)
+        if (endquoteindex < 0)
+            continue
+        endif
+        let filepath = line[startquoteindex:endquoteindex]
+        let filelines[i] = string(i + 1) . ' ' . filepath
     endfor
     for line in filelines
         echom line
