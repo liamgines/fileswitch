@@ -21,6 +21,12 @@ endfunction
 " https://vi.stackexchange.com/a/37661
 function! fileswitch#EchoFileLines()
     let filelines = s:LsToFileLines()
+    let linecount = len(filelines)
+    for i in range(0, linecount - 1)
+        let line = split(filelines[i])
+        let line[0] = string(i + 1)
+        let filelines[i] = join(line, ' ')
+    endfor
     for line in filelines
         echom line
     endfor
