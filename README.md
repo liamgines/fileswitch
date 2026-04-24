@@ -12,6 +12,10 @@ Default Binds
 `ALT+9` switches to the ninth file.<br>
 `ALT+0` switches to the tenth file.
 
+``
+ALT+`
+`` lists open files.
+
 Installation
 ------------
 Install with a plugin manager of your choice, or use Vim's native package manager:

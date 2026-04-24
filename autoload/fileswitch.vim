@@ -2,6 +2,30 @@ function! s:BufferIsFile(buffernumber)
     return getbufvar(a:buffernumber, '&buftype') == ''
 endfunction
 
+function! s:LsToFileLines()
+    const ls = execute("ls")
+    const lines = split(ls, "\n")
+    const linecount = len(lines)
+
+    let filelines = []
+    for i in range(0, linecount - 1)
+        let line = split(lines[i])
+        let buffernumber = str2nr(line[0])
+        if s:BufferIsFile(buffernumber)
+            call add(filelines, lines[i])
+        endif
+    endfor
+    return filelines
+endfunction
+
+" https://vi.stackexchange.com/a/37661
+function! fileswitch#EchoFileLines()
+    let filelines = s:LsToFileLines()
+    for line in filelines
+        echom line
+    endfor
+endfunction
+
 function! s:LsToFileNumbers()
     const ls = execute("ls")
     const lines = split(ls, "\n")
