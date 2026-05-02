@@ -28,8 +28,7 @@ function! s:FindCharIndex(string, char, startindex)
     return -1
 endfunction
 
-" https://vi.stackexchange.com/a/37661
-function! fileswitch#EchoFileLines()
+function! s:FileLinesToEcho()
     let filelines = s:LsToFileLines()
     let linecount = len(filelines)
     for i in range(0, linecount - 1)
@@ -45,8 +44,27 @@ function! fileswitch#EchoFileLines()
         let filepath = line[startquoteindex:endquoteindex]
         let filelines[i] = string(i + 1) . ' ' . filepath
     endfor
-    for line in filelines
-        echom line
+    return filelines
+endfunction
+
+function! fileswitch#SetStatusLine()
+    let filelines = s:FileLinesToEcho()
+    let linecount = len(filelines)
+
+    execute 'set statusline='
+    for i in range(0, linecount - 1)
+        let line = filelines[i]
+
+        let splitline = split(line, ' ')
+        let keynumber = splitline[0]
+        let filepath = splitline[1]
+        let pathwithoutquotes = split(filepath, '"')[0]
+        let splitpath = split(pathwithoutquotes, '\')
+        let filename = splitpath[len(splitpath) - 1]
+
+        execute 'set statusline+=' . keynumber . '\ ' . filename
+        let delimiter = (i != linecount - 1) ? '\ \|\ ' : ''
+        execute 'set statusline+=' . delimiter
     endfor
 endfunction
 

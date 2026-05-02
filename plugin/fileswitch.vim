@@ -10,8 +10,8 @@ endif
 augroup bufferupdates
     autocmd!
     autocmd BufAdd,BufDelete * call timer_start(0, { -> fileswitch#BindKeysToFiles() })
+    autocmd BufAdd,BufDelete * call timer_start(0, { -> fileswitch#SetStatusLine() })
 augroup END
 
 if !exists("g:fileswitch_use_defaults") || g:fileswitch_use_defaults
-    execute 'nnoremap '. printf(g:fileswitch_keyformat, '`') .' :call fileswitch#EchoFileLines()<CR>'
 endif
