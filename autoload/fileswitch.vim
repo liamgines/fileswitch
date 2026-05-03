@@ -62,7 +62,7 @@ function! fileswitch#SetStatusLine()
         let splitpath = split(pathwithoutquotes, '\')
         let filename = splitpath[len(splitpath) - 1]
 
-        execute 'set statusline+=' . keynumber . '\ ' . filename
+        execute 'set statusline+=' . keynumber . '\ ' . join(split(filename), '\ ')
         let delimiter = (i != linecount - 1) ? '\ \|\ ' : ''
         execute 'set statusline+=' . delimiter
     endfor
