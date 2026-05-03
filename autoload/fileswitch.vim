@@ -55,7 +55,7 @@ function! fileswitch#SetStatusLine()
     for i in range(0, linecount - 1)
         let line = filelines[i]
 
-        let splitline = split(line, ' ')
+        let splitline = split(line, ' "')
         let keynumber = splitline[0]
         let filepath = splitline[1]
         let pathwithoutquotes = split(filepath, '"')[0]
