@@ -14,4 +14,5 @@ augroup bufferupdates
 augroup END
 
 if !exists("g:fileswitch_use_defaults") || g:fileswitch_use_defaults
+    set laststatus=2
 endif
