@@ -3,6 +3,8 @@ fileswitch.vim
 
 A Vim plugin for quickly switching between files.
 
+![Screenshot](screenshot.png)
+
 Default Binds
 --------
 #### Normal Mode
